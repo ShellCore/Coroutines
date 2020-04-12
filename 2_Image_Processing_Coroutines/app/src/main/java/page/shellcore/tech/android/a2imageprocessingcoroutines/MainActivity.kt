@@ -14,7 +14,8 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
-    private val IMAGE_URL = "https://raw.githubusercontent.com/DevTides/JetpackDogsApp/master/app/src/main/res/drawable/dog.png"
+    private val IMAGE_URL =
+        "https://raw.githubusercontent.com/DevTides/JetpackDogsApp/master/app/src/main/res/drawable/dog.png"
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,16 +29,21 @@ class MainActivity : AppCompatActivity() {
 
             val originalBitmap = originalDeferred.await()
 
-            loadImage(originalBitmap)
+            val filteredDeferred = coroutineScope.async(Dispatchers.Default) {
+                applyFilter(originalBitmap)
+            }
+
+            val filteredBitmap = filteredDeferred.await()
+
+            loadImage(filteredBitmap)
         }
     }
 
-    private fun getOriginalBitmap(): Bitmap {
-        return URL(IMAGE_URL).openStream()
-            .use {
-                BitmapFactory.decodeStream(it)
-            }
-    }
+    private fun getOriginalBitmap(): Bitmap =
+        URL(IMAGE_URL).openStream()
+            .use { BitmapFactory.decodeStream(it) }
+
+    private fun applyFilter(bmp: Bitmap): Bitmap = Filter.apply(bmp)
 
     private fun loadImage(bmp: Bitmap) {
         progressBar.visibility = View.GONE
