@@ -1,7 +1,8 @@
-package page.shellcore.tech.a4androidcoroutinesroom
+package page.shellcore.tech.a4androidcoroutinesroom.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import page.shellcore.tech.a4androidcoroutinesroom.R
 
 class MainActivity : AppCompatActivity() {
 
