@@ -1,24 +1,62 @@
 package page.shellcore.tech.a4androidcoroutinesroom.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.fragment_login.*
 import page.shellcore.tech.a4androidcoroutinesroom.R
+import page.shellcore.tech.a4androidcoroutinesroom.viewmodel.LoginViewModel
 
-/**
- * A simple [Fragment] subclass.
- */
 class LoginFragment : Fragment() {
+
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupOnClickListeners()
+        initViewModel()
+    }
+
+    private fun setupOnClickListeners() {
+        btnLogin.setOnClickListener { onLogin(it) }
+        btnGotoSignUp.setOnClickListener { onGotoSignUp(it) }
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.apply {
+            loginComplete.observe(viewLifecycleOwner, Observer { isComplete ->
+
+            })
+            error.observe(viewLifecycleOwner, Observer { error ->
+
+            })
+        }
+    }
+
+    private fun onLogin(v: View) {
+        val action = LoginFragmentDirections.actionGoToMain()
+        Navigation.findNavController(v).navigate(action)
+    }
+
+    private fun onGotoSignUp(v: View) {
+        val action = LoginFragmentDirections.actionGoToSignUp()
+        Navigation.findNavController(v).navigate(action)
+    }
 }
