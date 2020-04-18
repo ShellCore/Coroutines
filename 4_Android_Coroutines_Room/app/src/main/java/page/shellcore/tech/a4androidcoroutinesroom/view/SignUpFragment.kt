@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_signup.*
 import page.shellcore.tech.a4androidcoroutinesroom.R
 import page.shellcore.tech.a4androidcoroutinesroom.viewmodel.SignUpViewModel
@@ -42,10 +44,12 @@ class SignUpFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.apply {
             signupComplete.observe(viewLifecycleOwner, Observer { isComplete ->
-
+                Toast.makeText(activity, "Signup complete", Toast.LENGTH_SHORT).show()
+                val action = SignUpFragmentDirections.actionGoToMain()
+                Navigation.findNavController(tilUsername).navigate(action)
             })
             error.observe(viewLifecycleOwner, Observer { error ->
-
+                Toast.makeText(activity, error, Toast.LENGTH_SHORT).show()
             })
         }
     }
@@ -56,7 +60,15 @@ class SignUpFragment : Fragment() {
     }
 
     private fun onSignUp(it: View) {
-        val action = SignUpFragmentDirections.actionGoToMain()
-        Navigation.findNavController(it).navigate(action)
+
+        val username = tilUsername.editText!!.text.toString()
+        val password = tilPassword.editText!!.text.toString()
+        val info = tilOtherInfo.editText!!.text.toString()
+
+        if (username.isNullOrEmpty() || password.isNullOrEmpty() || info.isNullOrEmpty()) {
+            Toast.makeText(activity, "Please fill all fields", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.signup(username, password, info)
+        }
     }
 }
