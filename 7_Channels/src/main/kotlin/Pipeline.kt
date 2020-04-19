@@ -17,14 +17,14 @@ fun main() {
     }
 }
 
-fun CoroutineScope.produceNumbers() = produce<Int> {
+private fun CoroutineScope.produceNumbers() = produce<Int> {
     var x = 1
     while (true) {
         send(x++)
     }
 }
 
-fun CoroutineScope.square(numbers: ReceiveChannel<Int>) = produce {
+private fun CoroutineScope.square(numbers: ReceiveChannel<Int>) = produce {
     for (x in numbers) {
         send(x * x)
     }
