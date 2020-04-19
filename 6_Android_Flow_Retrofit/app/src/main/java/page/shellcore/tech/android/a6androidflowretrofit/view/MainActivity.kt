@@ -2,6 +2,7 @@ package page.shellcore.tech.android.a6androidflowretrofit.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.newsArticles.observe(this, Observer { article ->
-
+            progressBar.visibility = View.GONE
+            recNewsArticles.visibility = View.VISIBLE
+            newsListAdapter.onAddNewsItem(article)
+            recNewsArticles.smoothScrollToPosition(0)
         })
     }
 }

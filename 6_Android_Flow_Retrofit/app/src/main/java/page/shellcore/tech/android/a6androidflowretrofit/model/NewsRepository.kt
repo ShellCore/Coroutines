@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class NewsRepository {
 
     companion object {
-        private const val BASE_URL = "https://raw.githubusercontent.com/DevTides/NewsApi/master/"
-        private const val NEWS_DELAY = 2000L
+         const val BASE_URL = "https://raw.githubusercontent.com/DevTides/NewsApi/master/"
+         const val NEWS_DELAY = 2000L
     }
 
     private val newsService = Retrofit.Builder()

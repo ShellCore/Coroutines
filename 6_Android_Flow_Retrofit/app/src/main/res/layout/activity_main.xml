@@ -8,6 +8,7 @@
     tools:context=".view.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/recNewsArticles"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -29,8 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtError"
@@ -41,7 +41,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Error Message"
-        tools:visibility="gone" />
+        tools:text="Error Message" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
